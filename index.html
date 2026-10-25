@@ -1,0 +1,285 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Álvaro · Timed Assessment · Sessions 7 & 8</title><style>
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Patrick+Hand&display=swap');
+:root{
+  --navy:#17324D;--navy2:#0D2F52;--blue:#2E8FB8;--sky:#EAF6FD;--mint:#EAF7F2;
+  --yellow:#FFD75E;--yellow2:#FFF4C7;--cream:#FFFDF8;--white:#fff;--pink:#FFF1F4;
+  --text:#17324D;--muted:#667D90;--line:#D7E3EB;--green:#2F8B69;--red:#C4535D;
+  --purple:#8E73C9;--shadow:0 12px 28px rgba(23,50,77,.10)
+}
+*{box-sizing:border-box}
+body{margin:0;background:#F4F1EA;color:var(--text);font-family:'Nunito',Arial,sans-serif}
+button{font:inherit}
+.topbar{position:sticky;top:0;z-index:30;background:linear-gradient(90deg,var(--navy2),#1B5D8C);color:#fff;box-shadow:0 4px 16px rgba(0,0,0,.12)}
+.topbar .inner{max-width:1060px;margin:auto;padding:12px 20px;display:flex;justify-content:space-between;align-items:center;gap:16px}
+.brand{font-weight:900}.brand small{display:block;font-size:11px;color:#D6E8F4;margin-top:2px}
+.progress-shell{position:sticky;top:63px;z-index:25;height:7px;background:#DCE6EC}.progress{height:100%;width:0;background:linear-gradient(90deg,#42A89D,var(--yellow));transition:.18s}
+.hero{padding:50px 20px 36px;background:linear-gradient(135deg,var(--cream) 70%,var(--sky) 70%);border-bottom:1px solid var(--line)}
+.wrap{max-width:1060px;margin:auto}
+.hero-grid{display:grid;grid-template-columns:1.25fr .75fr;gap:28px;align-items:center}
+.eyebrow{font-size:12px;font-weight:900;letter-spacing:.12em;text-transform:uppercase;color:var(--blue)}
+.hero h1{font-size:58px;line-height:.94;letter-spacing:-2px;margin:10px 0 14px}
+.hero h1 em{font-family:'Patrick Hand';font-style:normal;font-weight:400;background:linear-gradient(transparent 72%,var(--yellow) 72%)}
+.hero p{font-size:17px;font-weight:700;color:#35536B;max-width:700px}
+.note{background:var(--yellow);padding:24px;border-radius:22px;font-family:'Patrick Hand';font-size:28px;line-height:1.08;text-align:center;box-shadow:var(--shadow);transform:rotate(1deg)}
+section{padding:36px 20px}
+.info-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:16px}
+.info{background:#fff;border:1px solid var(--line);border-radius:15px;padding:16px;text-align:center;box-shadow:0 5px 14px rgba(23,50,77,.05)}
+.info strong{display:block;font-size:28px}
+.lead{color:var(--muted);font-weight:700;line-height:1.55}
+.timer{display:flex;align-items:center;gap:10px;flex-wrap:wrap;background:var(--yellow2);border:1px solid #ECD373;padding:14px;border-radius:15px;margin-bottom:14px}
+.timer strong{font-size:28px}
+.btn{border:0;border-radius:999px;padding:10px 15px;font-weight:900;cursor:pointer}
+.btn.primary{background:var(--navy);color:#fff}
+.btn.secondary{background:#fff;color:var(--navy);border:2px solid var(--navy)}
+.scorebox{display:flex;gap:10px;align-items:center;flex-wrap:wrap;background:var(--navy);color:#fff;border-radius:16px;padding:14px 16px;margin-bottom:14px}
+.scorebox strong{font-size:26px}.mini-progress{flex:1;min-width:180px;height:9px;background:rgba(255,255,255,.18);border-radius:999px;overflow:hidden}.mini-fill{height:100%;width:0;background:var(--yellow);transition:.2s}
+.qcard{background:#fff;border:1px solid var(--line);border-radius:17px;padding:18px;margin:0 0 13px;box-shadow:0 5px 14px rgba(23,50,77,.05)}
+.qhead{display:flex;justify-content:space-between;gap:12px;align-items:center}
+.qnum{font-size:11px;color:var(--blue);font-weight:900;text-transform:uppercase;letter-spacing:.08em}
+.qcat{font-size:10px;font-weight:900;border-radius:999px;padding:5px 8px;background:var(--sky);color:var(--navy)}
+.qtext{font-size:15px;font-weight:900;margin:8px 0 12px}
+.options{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}
+.option{border:2px solid #D9E4EA;background:#fff;color:var(--navy);padding:10px;border-radius:11px;text-align:left;cursor:pointer;font-weight:800}
+.option:hover:not(:disabled){border-color:var(--blue);background:#F6FBFE}
+.option.correct{border-color:var(--green);background:#EAF7F1;color:#1D6A50}
+.option.wrong{border-color:var(--red);background:#FFF0F1;color:#963844}
+.option:disabled{cursor:default}
+.feedback{display:none;margin-top:9px;border-radius:10px;padding:9px 11px;font-size:12px;font-weight:800}
+.feedback.show{display:block}.feedback.good{background:#EAF7F1;color:#1D6A50}.feedback.bad{background:#FFF0F1;color:#963844}
+.result{display:none;margin-top:18px;background:#fff;border:1px solid var(--line);border-radius:18px;padding:20px;box-shadow:var(--shadow)}
+.result h2{margin:0 0 8px;font-size:28px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:14px}
+.card{border:1px solid var(--line);border-radius:15px;padding:16px;background:#fff}.card.mint{background:var(--mint)}.card.sky{background:var(--sky)}.card.yellow{background:var(--yellow2)}.card.pink{background:var(--pink)}
+.card h3{margin:0 0 6px}.card p{margin:0;line-height:1.5;font-size:13px}
+.rule{padding:14px;border-radius:14px;background:#fff;border:1px solid var(--line);margin-top:12px}
+.rule ul{margin:8px 0 0;padding-left:20px}.rule li{margin:5px 0}
+.category-table{width:100%;border-collapse:collapse;margin-top:14px}.category-table th,.category-table td{border:1px solid var(--line);padding:9px;font-size:12px;text-align:left}.category-table th{background:var(--sky)}
+.footer{background:var(--navy);color:#fff;text-align:center;padding:28px 20px}.footer strong{font-family:'Patrick Hand';font-size:30px}
+@media(max-width:800px){.hero-grid{grid-template-columns:1fr}.info-grid{grid-template-columns:repeat(2,1fr)}.hero h1{font-size:46px}}
+@media(max-width:560px){.options,.grid2,.info-grid{grid-template-columns:1fr}.hero h1{font-size:40px}}
+
+.exam-note{background:var(--mint);border:1px solid #B8DCCB;border-radius:15px;padding:14px 16px;margin-top:14px;font-size:12px;font-weight:800;line-height:1.55}
+.hidden-area-note{font-size:10px;color:var(--muted);font-weight:800;margin-top:4px}
+.review-table{width:100%;border-collapse:collapse;margin-top:14px}
+.review-table th,.review-table td{border:1px solid var(--line);padding:9px;font-size:11px;text-align:left;vertical-align:top}
+.review-table th{background:var(--sky)}
+
+.option.selected{border-color:var(--blue);background:#EAF6FD;box-shadow:0 0 0 1px rgba(46,143,184,.15)}
+.option.correct-answer{border-color:var(--green);background:#EAF7F1;color:#1D6A50}
+.option.incorrect-answer{border-color:var(--red);background:#FFF0F1;color:#963844}
+.submit-row{display:flex;justify-content:flex-end;gap:10px;flex-wrap:wrap;margin-top:18px}
+.submit-note{background:var(--yellow2);border:1px solid #ECD373;border-radius:14px;padding:12px 14px;font-size:12px;font-weight:800;line-height:1.5;margin:14px 0}
+.answer-summary{margin-top:18px}
+.answer-card{border:1px solid var(--line);border-radius:14px;padding:14px;margin:10px 0;background:#fff}
+.answer-card.correct{border-left:6px solid var(--green)}
+.answer-card.wrong{border-left:6px solid var(--red)}
+.answer-card h4{margin:0 0 7px;font-size:13px}.answer-card p{margin:5px 0;font-size:12px;line-height:1.5}
+.answer-meta{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}.answer-pill{font-size:10px;font-weight:900;border-radius:999px;padding:5px 8px;background:var(--sky)}
+</style></head><body>
+<nav class="topbar">
+  <div class="inner">
+    <div class="brand">English with Mr. Rengifo<small>Álvaro · Timed Assessment · Sessions 7 & 8</small></div>
+    <div><b>20 questions</b></div>
+  </div>
+</nav>
+<div class="progress-shell"><div class="progress" id="scrollProgress"></div></div>
+
+<header class="hero">
+  <div class="wrap hero-grid">
+    <div>
+      <div class="eyebrow">Cumulative Timed Assessment · American English</div>
+      <h1>Sessions 7 + 8<br><em>without hints.</em></h1>
+      <p>This assessment mixes the grammar from Sessions 7 and 8 without topic labels or grammar hints. Choose your answers, review them, and change any response before submitting—just as you would in a real exam.</p>
+    </div>
+    <div class="note">No topic labels.<br>No instant feedback.<br><b>Review before submitting.</b></div>
+  </div>
+</header>
+
+<section>
+<div class="wrap">
+  <p class="lead">The official exam pace is 50 questions in 60 minutes, or about <b>72 seconds per question</b>. For 20 questions, the equivalent target is <b>24 minutes</b>. You may change any answer before submitting. Correct answers and explanations are revealed only after final submission. If you go beyond 24 minutes, you can continue; the final feedback will use both accuracy and actual completion time.</p>
+  <div class="info-grid">
+    <div class="info"><strong>20</strong>questions</div>
+    <div class="info"><strong>24 min</strong>target time</div>
+    <div class="info"><strong>75%</strong>exam pass reference</div>
+    <div class="info"><strong>72 sec</strong>target pace / question</div>
+  </div>
+  <div class="exam-note">Assessment mode: Topic labels are intentionally hidden while you answer. Selecting an option does <b>not</b> lock the question and does <b>not</b> show whether it is correct. You can return to any question and change your answer until you press <b>Submit assessment</b>.</div>
+</div>
+</section>
+
+<section style="background:#fff">
+<div class="wrap">
+  <div class="timer">
+    <strong id="clock">24:00</strong>
+    <button class="btn primary" id="startTimer">Start timer</button>
+    <button class="btn secondary" id="resetTimer">Reset</button>
+    <span id="timerMsg"></span>
+  </div>
+
+  <div class="scorebox">
+    <strong><span id="done">0</span>/20 answered</strong>
+    <div class="mini-progress"><div class="mini-fill" id="fill"></div></div>
+    <span id="statusText">Review and change answers freely before submitting.</span>
+  </div>
+
+  <div id="questions"></div>
+
+  <div class="submit-note">When you are ready, submit the assessment. After submission, all answers are locked and the page will reveal your correct and incorrect responses, the correct answers, topic breakdown and personalized feedback.</div>
+  <div class="submit-row"><button class="btn primary" id="submitAssessment">Submit assessment</button></div>
+
+  <div id="result" class="result"></div>
+</div>
+</section>
+
+<footer class="footer">
+  <strong>English with Mr. Rengifo</strong>
+  <div>Álvaro · Cumulative Timed Assessment · Sessions 7–8</div>
+</footer>
+<script>
+const questions=[{"area": "Session 7 · Conditional System", "q": "If you heat ice, it ___.", "o": ["melts", "will melt", "would melt", "would have melted"], "a": 0, "e": "This is a general truth, so use the Zero Conditional: Present Simple in both clauses."}, {"area": "Session 7 · Conditional System", "q": "If she studies tonight, she ___ more confident tomorrow.", "o": ["felt", "will feel", "would feel", "would have felt"], "a": 1, "e": "The future result is realistic and still possible, so use the First Conditional: will + base verb."}, {"area": "Session 7 · Conditional System", "q": "If I ___ more free time, I would take another course.", "o": ["have", "will have", "had", "had had"], "a": 2, "e": "This is an unreal present situation, so the Second Conditional uses Simple Past in the if-clause."}, {"area": "Session 7 · Conditional System", "q": "If they had checked the address, they ___ lost.", "o": ["wouldn't get", "won't get", "didn't get", "wouldn't have got"], "a": 3, "e": "The condition refers to an unreal past, so the result uses would have + past participle."}, {"area": "Session 7 · Conditionals & Connectors", "q": "You won't improve ___ you practice regularly.", "o": ["unless", "until", "although", "because"], "a": 0, "e": "'Unless' means 'if not': You won't improve if you don't practice regularly."}, {"area": "Session 7 · Wishes & Regrets", "q": "I wish I ___ more confident when speaking in public.", "o": ["am", "were", "will be", "had been yesterday only"], "a": 1, "e": "A present unreal wish uses a past form after wish. 'Were' is the preferred exam form here."}, {"area": "Session 7 · Wishes & Regrets", "q": "I wish I ___ more before last week's exam.", "o": ["study", "studied now", "had studied", "would study"], "a": 2, "e": "A regret about a finished past situation uses wish + Past Perfect."}, {"area": "Session 7 · Wishes & Regrets", "q": "If only we ___ earlier, we wouldn't have missed the flight.", "o": ["leave", "left", "would leave", "had left"], "a": 3, "e": "Past regret with 'if only' uses the Past Perfect."}, {"area": "Session 7 · Past Criticism", "q": "You ___ the instructions before starting the task.", "o": ["should have read", "should read yesterday", "would read", "had should read"], "a": 0, "e": "'Should have + past participle' expresses past advice or criticism about an action that did not happen."}, {"area": "Session 7 · Past Criticism", "q": "I ___ so much coffee last night. I couldn't sleep.", "o": ["shouldn't drink", "shouldn't have drunk", "wouldn't drank", "hadn't drink"], "a": 1, "e": "The speaker regrets a past action, so use shouldn't have + past participle."}, {"area": "Session 8 · Gerunds & Infinitives", "q": "She enjoys ___ new languages.", "o": ["learn", "to learning", "learning", "learns"], "a": 2, "e": "'Enjoy' is followed by a gerund."}, {"area": "Session 8 · Gerunds & Infinitives", "q": "They decided ___ the offer after discussing it.", "o": ["accept", "accepting", "accepted", "to accept"], "a": 3, "e": "'Decide' is followed by the to-infinitive."}, {"area": "Session 8 · Gerunds & Infinitives", "q": "Remember ___ the file before you close the program.", "o": ["to save", "save", "saving", "saved"], "a": 0, "e": "'Remember to do' refers to something you still need to do."}, {"area": "Session 8 · Gerunds & Infinitives", "q": "I remember ___ that restaurant when I was a child.", "o": ["visit", "visiting", "to visit", "visited"], "a": 1, "e": "'Remember doing' refers to a memory of a previous action or experience."}, {"area": "Session 8 · Relative Clauses", "q": "The woman ___ works at reception is very helpful.", "o": ["which", "where", "who", "whose"], "a": 2, "e": "The antecedent is a person and the relative pronoun is the subject, so use 'who'."}, {"area": "Session 8 · Relative Clauses", "q": "The student ___ laptop was stolen reported it immediately.", "o": ["who", "which", "where", "whose"], "a": 3, "e": "'Whose' expresses possession."}, {"area": "Session 8 · Relative Clauses", "q": "My brother, ___ lives in Arequipa, is visiting us this weekend.", "o": ["who", "that", "where", "what"], "a": 0, "e": "This is a non-defining relative clause about a person, so use 'who'. 'That' is not used here."}, {"area": "Session 8 · Linking Words", "q": "We stayed home ___ it was raining heavily.", "o": ["because of", "because", "despite", "therefore"], "a": 1, "e": "'Because' is followed by a clause."}, {"area": "Session 8 · Linking Words", "q": "___ the heavy traffic, we arrived on time.", "o": ["Although", "Because", "Despite", "However"], "a": 2, "e": "'Despite' is followed by a noun phrase."}, {"area": "Session 8 · Question Tags & Reference", "q": "She didn't call you yesterday, ___?", "o": ["didn't she", "does she", "was she", "did she"], "a": 3, "e": "A negative Past Simple statement takes a positive tag with 'did': did she?"}];
+let selected=Array(questions.length).fill(null);
+let remaining=1440;
+let elapsed=0;
+let timer=null;
+let finished=false;
+let started=false;
+
+function render(){
+  const root=document.getElementById("questions");
+  root.innerHTML="";
+  questions.forEach((x,i)=>{
+    const d=document.createElement("div");
+    d.className="qcard";
+    d.innerHTML=`<div class="qhead"><div class="qnum">Question ${i+1}</div></div>
+      <div class="qtext">${x.q}</div>
+      <div class="options">${x.o.map((v,j)=>`<button class="option" data-i="${i}" data-o="${j}">${String.fromCharCode(65+j)}. ${v}</button>`).join("")}</div>
+      <div class="feedback" id="fb-${i}"></div>`;
+    root.appendChild(d);
+  });
+  root.querySelectorAll(".option").forEach(b=>b.addEventListener("click",()=>choose(+b.dataset.i,+b.dataset.o)));
+  updateProgress();
+}
+
+function choose(i,j){
+  if(finished)return;
+  selected[i]=j;
+  const btns=[...document.querySelectorAll(`[data-i="${i}"]`)];
+  btns.forEach(b=>b.classList.remove("selected"));
+  btns[j].classList.add("selected");
+  updateProgress();
+}
+
+function updateProgress(){
+  const done=selected.filter(v=>v!==null).length;
+  document.getElementById("done").textContent=done;
+  document.getElementById("fill").style.width=(done/questions.length*100)+"%";
+  document.getElementById("statusText").textContent=done===questions.length ? "All questions answered. Review anything you want before submitting." : `${questions.length-done} question${questions.length-done===1?"":"s"} still unanswered.`;
+}
+
+function drawClock(){
+  const abs=Math.max(remaining,0);
+  const m=String(Math.floor(abs/60)).padStart(2,"0");
+  const s=String(abs%60).padStart(2,"0");
+  document.getElementById("clock").textContent=`${m}:${s}`;
+}
+function fmt(sec){return `${Math.floor(sec/60)} min ${String(sec%60).padStart(2,"0")} sec`;}
+function startTimer(){
+  if(timer||finished)return;
+  started=true;
+  document.getElementById("timerMsg").textContent="";
+  timer=setInterval(()=>{
+    elapsed++;remaining--;drawClock();
+    if(remaining===0){clearInterval(timer);timer=null;document.getElementById("timerMsg").textContent="24-minute target reached — continue if needed. Your actual completion time will be recorded.";}
+  },1000);
+}
+
+function categorySummary(){
+  const groups={};
+  questions.forEach((q,i)=>{
+    if(!groups[q.area])groups[q.area]={total:0,correct:0};
+    groups[q.area].total++;
+    if(selected[i]===q.a)groups[q.area].correct++;
+  });
+  return groups;
+}
+
+function submitAssessment(){
+  if(finished)return;
+  const unanswered=selected.filter(v=>v===null).length;
+  if(unanswered && !confirm(`You still have ${unanswered} unanswered question${unanswered===1?"":"s"}. Submit anyway?`))return;
+  finish();
+}
+
+function finish(){
+  finished=true;
+  if(timer){clearInterval(timer);timer=null;}
+  let score=0;
+  questions.forEach((q,i)=>{
+    if(selected[i]===q.a)score++;
+    const btns=[...document.querySelectorAll(`[data-i="${i}"]`)];
+    btns.forEach((b,j)=>{
+      b.disabled=true;b.classList.remove("selected");
+      if(j===q.a)b.classList.add("correct-answer");
+      if(selected[i]===j && j!==q.a)b.classList.add("incorrect-answer");
+    });
+    const fb=document.getElementById(`fb-${i}`);
+    if(selected[i]===q.a){fb.className="feedback show good";fb.textContent="Correct. "+q.e;}
+    else{fb.className="feedback show bad";fb.textContent="Review. "+q.e;}
+  });
+
+  const incorrect=questions.length-score;
+  const pct=Math.round(score/questions.length*100);
+  const target=1440;
+  const secPerQ=elapsed?Math.round(elapsed/questions.length):0;
+  const pacePerQ=Math.round(target/questions.length);
+  let paceLabel,paceText;
+  if(!started){paceLabel="Timer not used";paceText="No completion time was recorded because the timer was not started.";}
+  else if(elapsed<=1200){paceLabel="Fast pace";paceText="You finished well inside the 24-minute target.";}
+  else if(elapsed<=1440){paceLabel="Exam-ready pace";paceText="You finished within the official exam-equivalent pace.";}
+  else if(elapsed<=1680){paceLabel="Slightly over target";paceText="Your pace is close, but you need a little more speed.";}
+  else{paceLabel="Pacing needs attention";paceText="You are using more time per question than the official exam pace allows.";}
+
+  let accuracyLabel=pct>=90?"Excellent accuracy":pct>=80?"Strong accuracy":pct>=75?"At the exam pass threshold":pct>=65?"Developing accuracy":"Accuracy needs reinforcement";
+  const groups=categorySummary();
+  const ordered=Object.entries(groups).sort((a,b)=>(a[1].correct/a[1].total)-(b[1].correct/b[1].total));
+  const weakest=ordered[0], strongest=[...ordered].reverse()[0];
+  const tips=[];
+  if(pct<75)tips.push("Prioritize accuracy before trying to increase speed.");
+  if(started && elapsed>1440)tips.push("Work on faster recognition of conditional meaning, verb patterns, relative-clause function and linking clues.");
+  if(started && elapsed<960 && incorrect>=4)tips.push("You may be moving too quickly. Use more of your available time to verify the full sentence meaning and structure before submitting.");
+  if(weakest)tips.push(`Your weakest area in this assessment was ${weakest[0]}. Review that area first.`);
+  if(strongest && strongest[0]!==weakest?.[0])tips.push(`Your strongest area was ${strongest[0]}. Keep it active through cumulative review.`);
+  if(incorrect>0)tips.push("Add repeated error patterns—not isolated slips—to the Grammar Error Bank.");
+  if(pct>=80 && (!started || elapsed<=1440))tips.push("Your current accuracy is strong. Keep checking both meaning and structure before committing to the final answer.");
+
+  const rows=Object.entries(groups).map(([k,v])=>`<tr><td>${k}</td><td>${v.correct}/${v.total}</td><td>${Math.round(v.correct/v.total*100)}%</td></tr>`).join("");
+  const reviewRows=questions.map((q,i)=>`<tr><td>${i+1}</td><td>${q.area}</td><td>${selected[i]===null?"—":q.o[selected[i]]}</td><td>${q.o[q.a]}</td><td>${selected[i]===q.a?"✓ Correct":"✗ Review"}</td></tr>`).join("");
+  const detailed=questions.map((q,i)=>{const ok=selected[i]===q.a;return `<div class="answer-card ${ok?"correct":"wrong"}"><h4>Question ${i+1} · ${ok?"Correct":"Review"}</h4><p><b>${q.q}</b></p><p><b>Your answer:</b> ${selected[i]===null?"No answer":q.o[selected[i]]}</p><p><b>Correct answer:</b> ${q.o[q.a]}</p><p><b>Feedback:</b> ${q.e}</p><div class="answer-meta"><span class="answer-pill">${q.area}</span></div></div>`;}).join("");
+
+  const result=document.getElementById("result");
+  result.innerHTML=`<h2>Timed Assessment Feedback</h2>
+    <p><b>Completion time:</b> ${started?fmt(elapsed):"Not recorded"} · <b>Correct:</b> ${score}/20 · <b>Incorrect:</b> ${incorrect}/20 · <b>Accuracy:</b> ${pct}%</p>
+    <div class="grid2"><div class="card mint"><h3>${accuracyLabel}</h3><p>${score} correct answer${score===1?"":"s"} out of 20.</p></div><div class="card sky"><h3>${paceLabel}</h3><p>${paceText}${started?`<br>Average: ${secPerQ} sec/question. Target pace: about ${pacePerQ} sec/question.`:""}</p></div></div>
+    <table class="category-table"><tr><th>Area</th><th>Correct</th><th>Accuracy</th></tr>${rows}</table>
+    <div class="rule"><b>Points to improve:</b><ul>${tips.map(t=>`<li>${t}</li>`).join("")}</ul></div>
+    <h3 style="margin-top:20px">Answer summary</h3><table class="review-table"><tr><th>#</th><th>Area</th><th>Your answer</th><th>Correct answer</th><th>Result</th></tr>${reviewRows}</table>
+    <div class="answer-summary"><h3>Detailed review & feedback</h3>${detailed}</div>`;
+  result.style.display="block";
+  document.getElementById("timerMsg").textContent="Completed — answers locked and feedback revealed.";
+  document.getElementById("submitAssessment").disabled=true;
+  result.scrollIntoView({behavior:"smooth",block:"start"});
+}
+
+function resetAll(){
+  if(timer){clearInterval(timer);timer=null;}
+  selected=Array(questions.length).fill(null);remaining=1440;elapsed=0;finished=false;started=false;
+  drawClock();document.getElementById("timerMsg").textContent="";document.getElementById("result").style.display="none";document.getElementById("submitAssessment").disabled=false;render();
+}
+
+document.getElementById("startTimer").addEventListener("click",startTimer);
+document.getElementById("resetTimer").addEventListener("click",resetAll);
+document.getElementById("submitAssessment").addEventListener("click",submitAssessment);
+window.addEventListener("scroll",()=>{const h=document.documentElement.scrollHeight-innerHeight;document.getElementById("scrollProgress").style.width=(h?scrollY/h*100:0)+"%";});
+render();drawClock();
+</script></body></html>
